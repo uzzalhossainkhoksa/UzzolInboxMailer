@@ -1,0 +1,10 @@
+Hi {{name}},
+
+We found your podcast "{{podcast_name}}" and thought it's amazing.
+
+We’d love to feature "{{website_url}}" in our network of growing shows!
+
+Let us know what you think.
+
+Thanks,  
+Uzzol Inbox Mailer Team
