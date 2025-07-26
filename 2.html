@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PodcastPro Tools - Premium Automation Scripts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C5CE7;
+            --secondary: #FD79A8;
+            --accent: #00CEFF;
+            --dark: #2D3436;
+            --light: #F5F6FA;
+            --podcast: #E84393;
+            --success: #00B894;
+            --terminal: #1E272E;
+            --card-bg: rgba(255, 255, 255, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1E272E, #2D3436);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), #A55EEA);
+            padding: 5rem 0 8rem;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(108, 92, 231, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(253, 121, 168, 0.4) 0%, transparent 40%);
+            z-index: 0;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(0, 206, 255, 0.3);
+        }
+        
+        .subtitle {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: var(--dark);
+            box-shadow: 0 4px 20px rgba(0, 206, 255, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0, 206, 255, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        /* Market Badges */
+        .market-badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 2rem 0;
+        }
+        
+        .market-badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .market-badge:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .market-badge i {
+            color: var(--accent);
+        }
+        
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Script Cards */
+        .script-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .script-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .script-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 206, 255, 0.2);
+            border-color: rgba(0, 206, 255, 0.3);
+        }
+        
+        .script-header {
+            background: linear-gradient(135deg, var(--podcast), #E84393);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .script-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .script-id {
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .script-body {
+            padding: 1.5rem;
+        }
+        
+        .script-description {
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+        }
+        
+        .features-list {
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .feature-icon {
+            color: var(--accent);
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        
+        .script-code {
+            background: var(--terminal);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .script-code::before {
+            content: "TERMINAL";
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--accent);
+            color: var(--dark);
+            padding: 2px 10px;
+            font-size: 0.7rem;
+            font-family: 'Orbitron', sans-serif;
+            border-bottom-right-radius: 5px;
+        }
+        
+        pre {
+            color: var(--success);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            margin-top: 1.2rem;
+            white-space: pre-wrap;
+            tab-size: 2;
+        }
+        
+        .embed-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 1.5rem;
+        }
+        
+        .embed-badge {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--success);
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid rgba(0, 184, 148, 0.3);
+        }
+        
+        .script-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .script-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .script-tag {
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .tag-terminal {
+            background: rgba(108, 92, 231, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+        }
+        
+        .tag-podcast {
+            background: rgba(232, 67, 147, 0.1);
+            color: var(--podcast);
+            border: 1px solid rgba(232, 67, 147, 0.3);
+        }
+        
+        .tag-automation {
+            background: rgba(0, 206, 255, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(0, 206, 255, 0.3);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-weight: 500;
+        }
+        
+        .btn-copy {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-copy:hover {
+            background: #5C4BC7;
+            transform: translateY(-2px);
+        }
+        
+        .btn-view {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+        
+        .btn-view:hover {
+            background: rgba(0, 206, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Benefits Section */
+        .benefits {
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(232, 67, 147, 0.1));
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 5rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+            text-shadow: 0 0 10px rgba(0, 206, 255, 0.3);
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+        
+        .benefit-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .benefit-list {
+            list-style-type: none;
+        }
+        
+        .benefit-item {
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .benefit-item i {
+            color: var(--success);
+            font-size: 0.8rem;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            margin: 5rem 0;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .testimonial-text::before {
+            content: """;
+            font-size: 4rem;
+            position: absolute;
+            top: -1.5rem;
+            left: -1rem;
+            opacity: 0.1;
+            color: var(--accent);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+        }
+        
+        .author-info h4 {
+            margin-bottom: 0.2rem;
+        }
+        
+        .author-info p {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        /* Pricing */
+        .pricing {
+            background: linear-gradient(135deg, rgba(0, 206, 255, 0.05), rgba(108, 92, 231, 0.05));
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 5rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .pricing-card.featured {
+            border: 2px solid var(--accent);
+            transform: scale(1.05);
+            position: relative;
+        }
+        
+        .pricing-card.featured::after {
+            content: "POPULAR";
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--accent);
+            color: var(--dark);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: translateY(-10px) scale(1.05);
+        }
+        
+        .pricing-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .pricing-price {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .pricing-price span {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+        
+        .pricing-features {
+            list-style-type: none;
+            margin-bottom: 2rem;
+        }
+        
+        .pricing-features li {
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+        
+        .pricing-button {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            border-radius: 50px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .pricing-button:hover {
+            background: #5C4BC7;
+            transform: translateY(-3px);
+        }
+        
+        .featured .pricing-button {
+            background: var(--accent);
+            color: var(--dark);
+        }
+        
+        /* FAQ */
+        .faq {
+            margin: 5rem 0;
+        }
+        
+        .faq-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .faq-question i {
+            transition: transform 0.3s;
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-item.active .faq-answer {
+            padding-bottom: 1.5rem;
+            max-height: 500px;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--primary), #A55EEA);
+            padding: 5rem 0;
+            text-align: center;
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 90%);
+            margin: 5rem 0;
+        }
+        
+        .cta .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1E272E, #000);
+            padding: 4rem 0 2rem;
+            text-align: center;
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+        }
+        
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-link {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            header {
+                padding: 3rem 0 6rem;
+            }
+            
+            .script-grid, .benefits-grid, .testimonial-grid, .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .script-footer {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .action-buttons {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            
+            .benefits, .pricing {
+                padding: 2rem;
+            }
+            
+            .cta {
+                padding: 3rem 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header {
+                padding: 2rem 0 5rem;
+            }
+            
+            .script-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Scroll Animation */
+        .script-card, .benefit-card, .testimonial-card, .pricing-card, .faq-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1 class="floating">PodcastPro Automation</h1>
+                <p class="subtitle">Premium scripts to automate your podcast workflow and boost growth in competitive markets</p>
+                
+                <div class="market-badges">
+                    <div class="market-badge">
+                        <i class="fas fa-globe-americas"></i>
+                        USA
+                    </div>
+                    <div class="market-badge">
+                        <i class="fas fa-globe-europe"></i>
+                        UK
+                    </div>
+                    <div class="market-badge">
+                        <i class="fas fa-globe-americas"></i>
+                        Canada
+                    </div>
+                    <div class="market-badge">
+                        <i class="fas fa-globe-asia"></i>
+                        Australia
+                    </div>
+                    <div class="market-badge">
+                        <i class="fas fa-globe-europe"></i>
+                        Germany
+                    </div>
+                </div>
+                
+                <div class="cta-buttons">
+                    <a href="#scripts" class="btn btn-primary">
+                        <i class="fas fa-terminal"></i>
+                        View Scripts
+                    </a>
+                    <a href="#pricing" class="btn btn-secondary">
+                        <i class="fas fa-tag"></i>
+                        Pricing
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Stats Section -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Hours Saved Monthly</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">40%</div>
+                <div class="stat-label">Growth Increase</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Podcasters Using</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Target Markets</div>
+            </div>
+        </div>
+        
+        <!-- Scripts Section -->
+        <section id="scripts">
+            <h2 class="section-title">Premium Automation Scripts</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 3rem; opacity: 0.9;">
+                Professionally crafted scripts that integrate seamlessly with your existing workflow
+            </p>
+            
+            <div class="script-grid">
+                <!-- Script 1 -->
+                <div class="script-card">
+                    <div class="script-header">
+                        <h3 class="script-title">SEO Optimizer Pro</h3>
+                        <div class="script-id">1</div>
+                    </div>
+                    <div class="script-body">
+                        <div class="script-description">
+                            Automatically optimize episode metadata and transcripts for maximum discoverability across all platforms.
+                        </div>
+                        
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Keyword analysis & placement</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Platform-specific formatting</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Competitor benchmarking</span>
+                            </div>
+                        </div>
+                        
+                        <div class="script-code">
+                            <pre>#!/bin/bash
+# SEO Optimizer Pro
+EPISODE=$1
+python3 podcast_seo.py \
+    --episode "$EPISODE" \
+    --optimize \
+    --competitors "competitors.txt" \
+    --output "optimized_${EPISODE}"</pre>
+                        </div>
+                        
+                        <div class="embed-badges">
+                            <div class="embed-badge">
+                                <i class="fab fa-wordpress"></i>
+                                WordPress
+                            </div>
+                            <div class="embed-badge">
+                                <i class="fas fa-code"></i>
+                                Shopify
+                            </div>
+                            <div class="embed-badge">
+                                <i class="fas fa-server"></i>
+                                Custom CMS
+                            </div>
+                        </div>
+                    </div>
+                    <div class="script-footer">
+                        <div class="script-tags">
+                            <span class="script-tag tag-terminal">Bash</span>
+                            <span class="script-tag tag-podcast">Podcast</span>
+                            <span class="script-tag tag-automation">SEO</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn btn-copy">
+                                <i class="fas fa-copy"></i>
+                                Copy
+                            </button>
+                            <button class="action-btn btn-view">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Script 2 -->
+                <div class="script-card">
+                    <div class="script-header">
+                        <h3 class="script-title">Guest Booking Master</h3>
+                        <div class="script-id">2</div>
+                    </div>
+                    <div class="script-body">
+                        <div class="script-description">
+                            Automate your entire guest booking process from outreach to scheduling and follow-ups.
+                        </div>
+                        
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Calendar synchronization</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Personalized templates</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>CRM integration</span>
+                            </div>
+                        </div>
+                        
+                        <div class="script-code">
+                            <pre>#!/bin/bash
+# Guest Booking Master
+GUEST=$1
+python3 guest_booking.py \
+    --guest "$GUEST" \
+    --calendars "google,outlook" \
+    --templates "templates/" \
+    --auto-followup</pre>
+                        </div>
+                        
+                        <div class="embed-badges">
+                            <div class="embed-badge">
+                                <i class="fab fa-wordpress"></i>
+                                WordPress
+                            </div>
+                            <div class="embed-badge">
+                                <i class="fab fa-shopify"></i>
+                                Shopify
+                            </div>
+                        </div>
+                    </div>
+                    <div class="script-footer">
+                        <div class="script-tags">
+                            <span class="script-tag tag-terminal">Bash</span>
+                            <span class="script-tag tag-podcast">Booking</span>
+                            <span class="script-tag tag-automation">CRM</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn btn-copy">
+                                <i class="fas fa-copy"></i>
+                                Copy
+                            </button>
+                            <button class="action-btn btn-view">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Script 3 -->
+                <div class="script-card">
+                    <div class="script-header">
+                        <h3 class="script-title">Multi-Platform Publisher</h3>
+                        <div class="script-id">3</div>
+                    </div>
+                    <div class="script-body">
+                        <div class="script-description">
+                            One-click publishing to all major podcast platforms with automatic formatting for each.
+                        </div>
+                        
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Spotify/Apple optimized</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>YouTube conversion</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Social media snippets</span>
+                            </div>
+                        </div>
+                        
+                        <div class="script-code">
+                            <pre>#!/bin/bash
+# Multi-Platform Publisher
+EPISODE=$1
+PLATFORMS=("spotify" "apple" "google" "youtube")
+
+python3 publisher.py \
+    --episode "$EPISODE" \
+    --platforms "${PLATFORMS[@]}" \
+    --auto-post</pre>
+                        </div>
+                        
+                        <div class="embed-badges">
+                            <div class="embed-badge">
+                                <i class="fas fa-server"></i>
+                                Any CMS
+                            </div>
+                            <div class="embed-badge">
+                                <i class="fas fa-plug"></i>
+                                API Access
+                            </div>
+                        </div>
+                    </div>
+                    <div class="script-footer">
+                        <div class="script-tags">
+                            <span class="script-tag tag-terminal">Bash</span>
+                            <span class="script-tag tag-podcast">Distribution</span>
+                            <span class="script-tag tag-automation">Publishing</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn btn-copy">
+                                <i class="fas fa-copy"></i>
+                                Copy
+                            </button>
+                            <button class="action-btn btn-view">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Script 4 -->
+                <div class="script-card">
+                    <div class="script-header">
+                        <h3 class="script-title">Listener Analytics Pro</h3>
+                        <div class="script-id">4</div>
+                    </div>
+                    <div class="script-body">
+                        <div class="script-description">
+                            Comprehensive analytics dashboard aggregating data from all platforms in one place.
+                        </div>
+                        
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Cross-platform metrics</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Demographic breakdowns</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Engagement tracking</span>
+                            </div>
+                        </div>
+                        
+                        <div class="script-code">
+                            <pre>#!/bin/bash
+# Listener Analytics Pro
+python3 analytics_dashboard.py \
+    --platforms "spotify,apple,google" \
+    --metrics "downloads,listeners,demographics" \
+    --output "dashboard.html"</pre>
+                        </div>
+                        
+                        <div class="embed-badges">
+                            <div class="embed-badge">
+                                <i class="fab fa-wordpress"></i>
+                                WordPress
+                            </div>
+                            <div class="embed-badge">
+                                <i class="fab fa-squarespace"></i>
+                                Squarespace
+                            </div>
+                        </div>
+                    </div>
+                    <div class="script-footer">
+                        <div class="script-tags">
+                            <span class="script-tag tag-terminal">Bash</span>
+                            <span class="script-tag tag-podcast">Analytics</span>
+                            <span class="script-tag tag-automation">Dashboard</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn btn-copy">
+                                <i class="fas fa-copy"></i>
+                                Copy
+                            </button>
+                            <button class="action-btn btn-view">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Script 5 -->
+                <div class="script-card">
+                    <div class="script-header">
+                        <h3 class="script-title">Sponsorship Manager</h3>
+                        <div class="script-id">5</div>
+                    </div>
+                    <div class="script-body">
+                        <div class="script-description">
+                            Automate sponsor relationships, deliverables tracking, and payment processing.
+                        </div>
+                        
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Contract management</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Delivery tracking</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Payment automation</span>
+                            </div>
+                        </div>
+                        
+                        <div class="script-code">
+                            <pre>#!/bin/bash
+# Sponsorship Manager
+SPONSOR=$1
+python3 sponsorship_manager.py \
+    --sponsor "$SPONSOR" \
+    --contract "contracts/${SPONSOR}.pdf" \
+    --track-deliverables \
+    --process-payments</pre>
+                        </div>
+                        
+                        <div class="embed-badges">
+                            <div class="embed-badge">
+                                <i class="fas fa-server"></i>
+                                Custom CMS
+                            </div>
+                            <div class="embed-badge">
+                                <i class="fas fa-plug"></i>
+                                API Access
+                            </div>
+                        </div>
+                    </div>
+                    <div class="script-footer">
+                        <div class="script-tags">
+                            <span class="script-tag tag-terminal">Bash</span>
+                            <span class="script-tag tag-podcast">Monetization</span>
+                            <span class="script-tag tag-automation">Sponsors</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn btn-copy">
+                                <i class="fas fa-copy"></i>
+                                Copy
+                            </button>
+                            <button class="action-btn btn-view">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Script 6 -->
+                <div class="script-card">
+                    <div class="script-header">
+                        <h3 class="script-title">Show Notes Generator</h3>
+                        <div class="script-id">6</div>
+                    </div>
+                    <div class="script-body">
+                        <div class="script-description">
+                            AI-powered show notes creation with timestamps, key takeaways, and SEO optimization.
+                        </div>
+                        
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>AI analysis</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Timestamp generation</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>SEO optimization</span>
+                            </div>
+                        </div>
+                        
+                        <div class="script-code">
+                            <pre>#!/bin/bash
+# Show Notes Generator
+EPISODE=$1
+python3 show_notes.py \
+    --episode "$EPISODE" \
+    --style "professional" \
+    --seo \
+    --output "show_notes_${EPISODE}.md"</pre>
+                        </div>
+                        
+                        <div class="embed-badges">
+                            <div class="embed-badge">
+                                <i class="fab fa-wordpress"></i>
+                                WordPress
+                            </div>
+                            <div class="embed-badge">
+                                <i class="fab fa-ghost"></i>
+                                Ghost
+                            </div>
+                        </div>
+                    </div>
+                    <div class="script-footer">
+                        <div class="script-tags">
+                            <span class="script-tag tag-terminal">Bash</span>
+                            <span class="script-tag tag-podcast">Content</span>
+                            <span class="script-tag tag-automation">AI</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn btn-copy">
+                                <i class="fas fa-copy"></i>
+                                Copy
+                            </button>
+                            <button class="action-btn btn-view">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Script 7 -->
+                <div class="script-card">
+                    <div class="script-header">
+                        <h3 class="script-title">Social Clip Creator</h3>
+                        <div class="script-id">7</div>
+                    </div>
+                    <div class="script-body">
+                        <div class="script-description">
+                            Automatically create platform-optimized clips from episodes for social media.
+                        </div>
+                        
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Auto-highlight detection</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Platform formatting</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Caption generation</span>
+                            </div>
+                        </div>
+                        
+                        <div class="script-code">
+                            <pre>#!/bin/bash
+# Social Clip Creator
+EPISODE=$1
+python3 clip_creator.py \
+    --episode "$EPISODE" \
+    --platforms "tiktok,instagram,youtube" \
+    --auto-highlights \
+    --output-dir "social_clips"</pre>
+                        </div>
+                        
+                        <div class="embed-badges">
+                            <div class="embed-badge">
+                                <i class="fas fa-server"></i>
+                                Any CMS
+                            </div>
+                        </div>
+                    </div>
+                    <div class="script-footer">
+                        <div class="script-tags">
+                            <span class="script-tag tag-terminal">Bash</span>
+                            <span class="script-tag tag-podcast">Marketing</span>
+                            <span class="script-tag tag-automation">Social Media</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn btn-copy">
+                                <i class="fas fa-copy"></i>
+                                Copy
+                            </button>
+                            <button class="action-btn btn-view">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Script 8 -->
+                <div class="script-card">
+                    <div class="script-header">
+                        <h3 class="script-title">RSS Feed Manager</h3>
+                        <div class="script-id">8</div>
+                    </div>
+                    <div class="script-body">
+                        <div class="script-description">
+                            Advanced RSS feed management with automatic validation and platform optimization.
+                        </div>
+                        
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Feed validation</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Platform optimization</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Change tracking</span>
+                            </div>
+                        </div>
+                        
+                        <div class="script-code">
+                            <pre>#!/bin/bash
+# RSS Feed Manager
+FEED_URL=$1
+python3 rss_manager.py \
+    --feed "$FEED_URL" \
+    --validate \
+    --optimize \
+    --platforms "spotify,apple,google"</pre>
+                        </div>
+                        
+                        <div class="embed-badges">
+                            <div class="embed-badge">
+                                <i class="fab fa-wordpress"></i>
+                                WordPress
+                            </div>
+                            <div class="embed-badge">
+                                <i class="fas fa-server"></i>
+                                Custom
+                            </div>
+                        </div>
+                    </div>
+                    <div class="script-footer">
+                        <div class="script-tags">
+                            <span class="script-tag tag-terminal">Bash</span>
+                            <span class="script-tag tag-podcast">Distribution</span>
+                            <span class="script-tag tag-automation">RSS</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn btn-copy">
+                                <i class="fas fa-copy"></i>
+                                Copy
+                            </button>
+                            <button class="action-btn btn-view">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Script 9 -->
+                <div class="script-card">
+                    <div class="script-header">
+                        <h3 class="script-title">Engagement Tracker</h3>
+                        <div class="script-id">9</div>
+                    </div>
+                    <div class="script-body">
+                        <div class="script-description">
+                            Track listener engagement across platforms and identify your most loyal fans.
+                        </div>
+                        
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Engagement scoring</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Superfan identification</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Retention analysis</span>
+                            </div>
+                        </div>
+                        
+                        <div class="script-code">
+                            <pre>#!/bin/bash
+# Engagement Tracker
+python3 engagement_tracker.py \
+    --sources "spotify,apple,website" \
+    --score-metrics "listens,shares,comments" \
+    --identify-superfans \
+    --output "engagement_report.html"</pre>
+                        </div>
+                        
+                        <div class="embed-badges">
+                            <div class="embed-badge">
+                                <i class="fas fa-server"></i>
+                                Any CMS
+                            </div>
+                        </div>
+                    </div>
+                    <div class="script-footer">
+                        <div class="script-tags">
+                            <span class="script-tag tag-terminal">Bash</span>
+                            <span class="script-tag tag-podcast">Analytics</span>
+                            <span class="script-tag tag-automation">Engagement</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn btn-copy">
+                                <i class="fas fa-copy"></i>
+                                Copy
+                            </button>
+                            <button class="action-btn btn-view">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Script 10 -->
+                <div class="script-card">
+                    <div class="script-header">
+                        <h3 class="script-title">Monetization Optimizer</h3>
+                        <div class="script-id">10</div>
+                    </div>
+                    <div class="script-body">
+                        <div class="script-description">
+                            Analyze and optimize all revenue streams with actionable recommendations.
+                        </div>
+                        
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Revenue aggregation</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Sponsor performance</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle feature-icon"></i>
+                                <span>Merchandise analysis</span>
+                            </div>
+                        </div>
+                        
+                        <div class="script-code">
+                            <pre>#!/bin/bash
+# Monetization Optimizer
+python3 revenue_optimizer.py \
+    --sources "sponsorships,merch,donations" \
+    --analyze-performance \
+    --generate-recommendations</pre>
+                        </div>
+                        
+                        <div class="embed-badges">
+                            <div class="embed-badge">
+                                <i class="fab fa-wordpress"></i>
+                                WordPress
+                            </div>
+                            <div class="embed-badge">
+                                <i class="fab fa-shopify"></i>
+                                Shopify
+                            </div>
+                        </div>
+                    </div>
+                    <div class="script-footer">
+                        <div class="script-tags">
+                            <span class="script-tag tag-terminal">Bash</span>
+                            <span class="script-tag tag-podcast">Monetization</span>
+                            <span class="script-tag tag-automation">Revenue</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn btn-copy">
+                                <i class="fas fa-copy"></i>
+                                Copy
+                            </button>
+                            <button class="action-btn btn-view">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Benefits Section -->
+        <section class="benefits">
+            <h2 class="section-title">Why Podcast Professionals Love Us</h2>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="benefit-title">Time Savings</h3>
+                    <ul class="benefit-list">
+                        <li class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            Save 20+ hours/month
+                        </li>
+                        <li class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            Automate repetitive tasks
+                        </li>
+                        <li class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            Batch processing
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="benefit-title">Growth Boost</h3>
+                    <ul class="benefit-list">
+                        <li class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            40% better discoverability
+                        </li>
+                        <li class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            Platform optimization
+                        </li>
+                        <li class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            Competitor insights
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3 class="benefit-title">Monetization</h3>
+                    <ul class="benefit-list">
+                        <li class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            Sponsor management
+                        </li>
+                        <li class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            Revenue tracking
+                        </li>
+                        <li class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            Merchandise integration
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <h2 class="section-title">What Our Customers Say</h2>
+            
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        These scripts have completely transformed our podcast workflow. We're saving over 30 hours a month on production tasks!
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Johnson" class="author-avatar">
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Tech Talk Podcast, USA</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        The SEO optimization script alone increased our downloads by 45% in the first month. Incredible results!
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="David Müller" class="author-avatar">
+                        <div class="author-info">
+                            <h4>David Müller</h4>
+                            <p>Business Insights, Germany</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        As a podcast network with 15 shows, these automation tools have standardized our processes across all productions.
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma Wilson" class="author-avatar">
+                        <div class="author-info">
+                            <h4>Emma Wilson</h4>
+                            <p>Media Network, UK</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Pricing Section -->
+        <section class="pricing" id="pricing">
+            <h2 class="section-title">Simple, Transparent Pricing</h2>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="pricing-title">Starter</h3>
+                    <div class="pricing-price">$49<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>5 Premium Scripts</li>
+                        <li>Basic Automation</li>
+                        <li>Email Support</li>
+                        <li>WordPress Integration</li>
+                    </ul>
+                    <a href="#" class="pricing-button">Get Started</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3 class="pricing-title">Professional</h3>
+                    <div class="pricing-price">$99<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>All 10 Scripts</li>
+                        <li>Advanced Automation</li>
+                        <li>Priority Support</li>
+                        <li>All CMS Integrations</li>
+                        <li>API Access</li>
+                    </ul>
+                    <a href="#" class="pricing-button">Get Professional</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3 class="pricing-title">Enterprise</h3>
+                    <div class="pricing-price">$299<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>All Scripts + Custom</li>
+                        <li>White-label Solutions</li>
+                        <li>24/7 Support</li>
+                        <li>Dedicated Engineer</li>
+                        <li>Network Licensing</li>
+                    </ul>
+                    <a href="#" class="pricing-button">Contact Sales</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="faq">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What technical skills do I need to use these scripts?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>No advanced technical skills are required! Our scripts come with easy installation guides and can be run with simple commands. For CMS integration, we provide copy-paste embed codes.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Which CMS platforms do you support?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We support all major CMS platforms including WordPress, Shopify, Squarespace, Wix, and custom solutions. Each script includes specific integration instructions for your platform.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I try before I buy?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! We offer a 14-day free trial of our Professional plan with full access to all scripts. No credit card required to start the trial.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How often are the scripts updated?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We release updates monthly to ensure compatibility with all platforms and add new features. All updates are free for active subscribers.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Transform Your Podcast Workflow?</h2>
+            <p>Join hundreds of podcast professionals who save time and grow their audience with our automation tools.</p>
+            <div class="cta-buttons">
+                <a href="#pricing" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    Get Started
+                </a>
+                <a href="#" class="btn btn-secondary">
+                    <i class="fas fa-question-circle"></i>
+                    Ask Us Anything
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">PodcastPro Tools</div>
+            
+            <div class="footer-links">
+                <a href="#" class="footer-link">Home</a>
+                <a href="#scripts" class="footer-link">Scripts</a>
+                <a href="#pricing" class="footer-link">Pricing</a>
+                <a href="#" class="footer-link">Documentation</a>
+                <a href="#" class="footer-link">Contact</a>
+            </div>
+            
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+            </div>
+            
+            <p class="copyright">© 2024 Nirob Tech. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.script-card, .benefit-card, .testimonial-card, .pricing-card, .faq-item').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Copy button functionality
+        document.querySelectorAll('.btn-copy').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const codeBlock = this.closest('.script-card').querySelector('pre');
+                const code = codeBlock.textContent;
+                
+                navigator.clipboard.writeText(code).then(() => {
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                    }, 2000);
+                });
+            });
+        });
+        
+        // FAQ toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
